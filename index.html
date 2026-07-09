@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube 自動収集ギャラリー</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts の読み込み -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>動画ギャラリー</h1>
+            <p>設定した条件のYouTube動画を自動で収集して表示します</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 動画一覧が表示されるエリア -->
+        <div id="gallery" class="gallery-grid">
+            <!-- JavaScriptによってここに動画カードが挿入されます -->
+            <div class="loading">データを読み込み中...</div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 YouTube Auto Gallery</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript の読み込み -->
+    <script src="script.js"></script>
+</body>
+</html>

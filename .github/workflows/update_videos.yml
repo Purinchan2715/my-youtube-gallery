@@ -1,0 +1,41 @@
+name: Update YouTube Videos
+
+# 実行されるタイミングの設定
+on:
+  schedule:
+    # 毎日 UTC 0:00 と 12:00（日本時間 午前9時と午後9時）に自動実行
+    - cron: '0 0,12 * * *'
+  # 手動で実行ボタンを押せるようにする
+  workflow_dispatch:
+
+# ジョブの定義
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    # リポジトリへの書き込み権限を付与
+    permissions:
+      contents: write
+
+    steps:
+      # 1. リポジトリのコードをチェックアウト（取得）する
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Pythonの環境をセットアップする
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # 3. 動画取得のPythonスクリプトを実行する
+      - name: Run fetch script
+        run: python fetch_youtube.py
+
+      # 4. 変更があった場合のみ、自動でコミットしてプッシュする
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add videos.json
+          # 変更がある場合のみコミットする（変更がなければスキップ）
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update videos.json" && git push)
