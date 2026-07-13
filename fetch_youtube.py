@@ -42,8 +42,8 @@ def main():
     config = load_json(CONFIG_FILE)
     existing_videos = load_json(VIDEOS_FILE)
     
-    # 既存の動画IDをリストにしておく（重複チェック用）
-    existing_ids = [video['id'] for video in existing_videos]
+    # 既存の動画IDをリストにしておく（重複チェック用、idが無い不正なデータは無視）
+    existing_ids = [video.get('id') for video in existing_videos if isinstance(video, dict) and 'id' in video]
     
     new_videos = []
     
