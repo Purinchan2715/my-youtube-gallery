@@ -96,8 +96,14 @@ def main():
     if new_videos:
         # 新しい動画を先頭にして、既存の動画と結合
         updated_videos = new_videos + existing_videos
+        
+        # 件数が多すぎるとサイトが重くなるため、最新の100件までに制限する
+        MAX_VIDEOS = 100
+        if len(updated_videos) > MAX_VIDEOS:
+            updated_videos = updated_videos[:MAX_VIDEOS]
+            
         save_json(VIDEOS_FILE, updated_videos)
-        print(f"\n合計 {len(new_videos)} 件の新しい動画を保存しました。")
+        print(f"\n合計 {len(new_videos)} 件の新しい動画を追加しました。（最大{MAX_VIDEOS}件まで保存）")
     else:
         print("\n新しい動画はありませんでした。")
         
